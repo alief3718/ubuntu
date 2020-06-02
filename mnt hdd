@@ -1,0 +1,72 @@
+sudo nano /etc/initramfs-tools/modules 
+จากนั้นเอาอันนี้ไปวางต่อทีว่าง
+xhci_hcd
+usbhid
+hid
+usb_storage
+---------------
+จากนั้น
+เอา usb ไปเสียบช่อง 3.0
+-------------------
+จากนั้นใช้คำสั่ง
+sudo update-initramfs -u
+-------------------------
+จากนั้น
+shutdown -h now
+-------------------------
+จากนั้น
+echo -e "vm.swappiness=0" | sudo tee -a /etc/sysctl.conf
+--------------------------
+จากนั้น
+sudo nano /etc/fstab
+--------------------------
+จากนั้น
+แก้ default เป็น noatime,errors=remount-ro 
+(เอา 0 0 ไว้)ทั้งสองอัน
+--------------------------
+จากนั้น
+echo -e "#\x21/bin/sh\\nfstrim -v /" | sudo tee /etc/cron.daily/trim
+--------------------------
+จากนั้น
+sudo chmod +x /etc/cron.daily/trim
+--------------------------
+จากนั้น
+sudo reboot
+--------------------------
+จากนั้นเปลี่ยนเวลาที่เครื่อง
+dpkg-reconfigure tzdata
+--------------------------
+จากนั้น
+cat /proc/mdstat
+--------------------------
+จากนั้นเช็คชื่อ raid
+sudo nano /etc/fstab
+--------------------------
+จากนั้น
+sudo apt-get update && sudo apt-get upgrade -y
+--------------------------
+จากนั้น
+sudo update-grub
+--------------------------
+จากนั่น
+sudo reboot
+--------------------------
+เช็ค raid อีกรอบ (ให้ชื่อ raid เป็น md2)
+cat /proc/mdstat
+--------------------------
+จากนั้น
+sudo nano /etc/fstab
+--------------------------
+จากนั้นใส่คำสั่งในบรรทัดที่ว่าง
+/dev/md2 /mnt ext4 nofail 0 0 แล้วเซฟ
+--------------------------
+จากนั้น
+sudo reboot
+--------------------------
+จากนั้นเช็ค mnt
+ls -al /mnt
+--------------------------
+
+
+
+
