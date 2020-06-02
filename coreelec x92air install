@@ -1,0 +1,56 @@
+cd /storage/ #putty
+mkdir gdrive #putty สร้างโฟลเดอร์สำหรับ mount
+mkdir log #putty สร้างโฟลเดอร์สำหรับเก็บ log
+wget https://beta.rclone.org/v1.50.2/rclone-v1.50.2-linux-arm.zip #putty ดาวโหลดโปรแกรม rclone
+unzip rclone-v1.50.2-linux-arm.zip #putty แตกไฟล์ rclone
+mkdir /storage/.config/rclone #putty สร้างโฟลเดอร์ที่เก็บโปรแกรม rclone 
+mv rclone-v1.50.2-linux-arm/* /storage/.config/rclone #putty ย้ายที่แตกไฟล์ไว้ไปเก็บไว้ในที่เก็บโปรแกรม rclone
+rm -fv rclone-v1.50.2-linux-arm.zip #putty ลบไม่ใช้แล้ว
+rm -r rclone-v1.50.2-linux-arm #putty ลบไม่ใช้แล้ว
+
+เปิด cmd ขึ้นมา
+cd /d E:\rclone #cmd ย้ายไปที่โฟลเดอร์ที่เก็บ rclone.conf
+pscp rclone.conf root@192.168.1.2:/storage/.config/rclone #cmd นำเข้าไฟล์ conf 
+cd /d E:\Program\X96_Air_P2 #cmd ย้ายไปที่เก็บไฟล์ รีโมทและไฟ
+pscp vfd.conf root@192.168.1.2:/storage/.config #cmd นำเข้าไฟล์
+pscp X92_remote root@192.168.1.2:/storage/.config/rc_keymaps #cmd นำเข้าไฟล์
+pscp rc_maps.cfg root@192.168.1.2:/storage/.config #cmd นำเข้าไฟล์ 
+pscp remote.xml root@192.168.1.2:/storage/.kodi/userdata/keymaps #cmd นำเข้าไฟล์
+
+nano /storage/.config/autostart.sh #แบบเก่ายกเลิกไม่ใช้แล้วอันนี้แต่จดเก็บไว้เฉย ๆ
+nano /storage/.config/system.d/rclone.service #putty สร้างไฟล์ service
+จากนั้นกดปุ่ม Ctrl+x
+กดปุ่ม y
+กด enter
+systemctl enable rclone.service #putty เปิดใช้งานรันตอนเปิดเครื่อง
+systemctl start rclone.service #putty เริ่มทำงาน service
+
+cd /storage/.kodi/media/ #putty ไปโฟลเดอร์ที่เก็บ font
+mkdir Fonts #putty สร้างโฟลเดอร์เก็บ font
+cd /d E:\Program\X96_Air_P2 #cmd ไปโฟบเดอร์ที่เก็บ font บนคอม
+pscp arial.ttf root@192.168.1.2:/storage/.kodi/media/Fonts #cmd
+
+update
+cd /storage/.update #putty ไปที่อยู่เก็บไฟล์อัพเดต
+wget https://relkai.coreelec.org/CoreELEC-Amlogic-ng.arm-9.2-nightly_20191224.tar #putty ดาวโหลดไฟล์อัพเดต
+
+ใน coreelec ตั้งค่า auto update เลื่อนเปิดแค่อันเดียวทีเหลือปิดไปไม่สำคัญ
+
+**คำสั่งหยุด MOUNT**
+ps aux | grep rclone | awk '{print $2}' | xargs kill -9 #putty
+fusermount -uz /storage/gdrive #putty
+
+**wakeup remote**
+inject_bl301 #putty
+Y #putty กด enter
+systemctl stop kodi #putty
+systemctl stop eventlircd #putty
+ir-keytable -u #putty
+กดปุ่มที่่รีโมท power
+mount -o rw,remount /flash #putty
+nano /flash/config.ini #putty แก้ไข remotewakeup, decode_type and remotewakeupmask
+sync && reboot #putty
+
+installentware #putty ติดตั้ง Entware
+Y #putty เพื่อรีเครื่อง
+opkg install htop #putty เพื่อดู process
