@@ -6,3 +6,18 @@
 
 เข้าใช้ หน้างต่าง
 ----screen -r rclone
+
+คำสั่งใช้บ่อย
+sudo -i #เข้าสู่ root
+ls -al /etc/systemd/system #ดูรายชื่อเซอร์วิส
+nano /etc/systemd/system/ระบุชื่อเซอร์วิส #แก้ไขเซอร์วิส
+systemctl start ชื่อเซอร์วิส #เริ่มเซอร์วิส 
+systemctl restart ชื่อเซอร์วิส #รีสตาทเซอร์วิส
+systemctl stop ชื่อเซอร์วิส #หยุดเซอร์วิส
+systemctl status ชื่อเซอร์วิส #ดูสถานะเซอร์วิส
+ps aux | grep ชื่อ #ค้นหา process
+cat /tmp/rclone-mount.log #ดู log rclone mount
+sudo shutdown -h now #ปิดเครื่อง
+
+curl -s https://raw.githubusercontent.com/sivel/speedtest-cli/master/speedtest.py | python - --server 8990 #เทสสปีด
+ps aux #ดูโปรเซส
