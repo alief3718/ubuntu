@@ -1,3 +1,12 @@
+สร้างไฟล์ install ก่อน
+--sudo -i
+--cd /tmp
+--nano install
+--คัดลอกสคริปด้านล่างมาวางแล้ว SAVE
+--chmod +x install
+-- ./install
+--------------------------------------------------------
+
 #!/bin/bash
 sudo apt-get install -y samba vsftpd
 curl https://rclone.org/install.sh | sudo bash -s beta
